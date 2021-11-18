@@ -1,0 +1,163 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <div class="content">
+          <div class="columns is-vcentered">
+            <div class="column is-6">
+              <article class="media">
+                <figure class="media-left">
+                  <p class="image is-128x128">
+                    <img src="{{obj.avatar.url}}" class="is-rounded">
+                  </p>
+                </figure>
+                <div class="media-content">
+                  <div class="content">
+                    <p>
+                    <h4 class="is-title is-size-4">{{obj.first_name}} {{obj.last_name}}</h4>
+                    <!-- <br> -->
+                    {{obj.bio}}
+                    </p>
+                  </div>
+                  <nav class="level is-mobile">
+                    <div class="level-left">
+                      <a class="level-item">
+                        <button class="button is-primary" id="showModal">Edit Profile</button>
+                      </a>
+                    </div>
+                  </nav>
+                </div>
+              </article>
+            </div>
+            <div class="column is-6 has-text-centered">
+              <nav class="level">
+                <div class="level-item has-text-centered">
+                  <div>
+                    <p class="heading">Friends</p>
+                    <p class="title">3,456</p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div>
+                    <p class="heading">Following</p>
+                    <p class="title">123</p>
+                  </div>
+                </div>
+                <div class="level-item has-text-centered">
+                  <div>
+                    <p class="heading">Followers</p>
+                    <p class="title">456K</p>
+                  </div>
+                </div>
+              </nav>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfile">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Edit Profile</p>
+          <button class="delete" id="editProfileClose" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="field">
+              <label class="label">{{form.first_name.label}}</label>
+              <div class="control">
+                {{form.first_name}}
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">{{form.last_name.label}}</label>
+              <div class="control">
+                {{form.last_name}}
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">{{form.country.label}}</label>
+              <div class="control">
+                {{form.country}}
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">{{form.bio.label}}</label>
+              <div class="control">
+                {{form.bio}}
+              </div>
+            </div>
+            <div id="uploadAvatar" class="file has-name is-right is-fullwidth">
+              <label class="file-label">
+                <input class="file-input" type="file" name="avatar">
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="material-icons">upload</i>
+                  </span>
+                  <span class="file-label">
+                    Choose a file…
+                  </span>
+                </span>
+                <span class="file-name">
+                  {% if obj.avatar %}
+                  {{obj.avatar.name}}
+                  {% else %}
+                  No file uploaded
+                  {% endif %}
+                </span>
+              </label>
+            </div>
+
+            <script>
+              const fileInput = document.querySelector('#uploadAvatar input[type=file]');
+              fileInput.onchange = () => {
+                if (fileInput.files.length > 0) {
+                  const fileName = document.querySelector('#uploadAvatar .file-name');
+                  fileName.textContent = fileInput.files[0].name;
+                }
+              }
+            </script>
+        </section>
+        <footer class="modal-card-foot">
+          <button type="submit" class="button is-success">Save changes</button>
+        </footer>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <script>
+    var btn = document.querySelector('#showModal');
+    var modalDlg = document.querySelector('#editProfile');
+    var editProfileCloseBtn = document.querySelector('#editProfileClose');
+    btn.addEventListener('click', function () {
+      modalDlg.classList.add('is-active');
+    });
+
+    editProfileCloseBtn.addEventListener('click', function () {
+      modalDlg.classList.remove('is-active');
+    });
+  </script>
+</section>
+<section>
+  <div class="container">
+    <div class="tabs is-centered">
+      <ul>
+        <li class="is-active"><a>Friends</a></li>
+        <li><a>Posts</a></li>
+        <li><a>Photos</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

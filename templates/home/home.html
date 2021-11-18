@@ -2,72 +2,268 @@
 {% load static %}
 {% block title %}Home{% endblock title %}
 {% block content %}
-
-<div class="card">
-    <div class="header">
-        <div class="media">
-            <div class="media-left">
-                <figure class="image is-48x48">
-                    <img src="https://source.unsplash.com/random/96x96" alt="Placeholder image">
-                </figure>
-            </div>
-            <div class="media-content">
-                <p class="title is-4">John Smith</p>
-                <p class="subtitle is-6">@johnsmith</p>
-            </div>
-        </div>
-    </div>
-    <div class="card-image">
-        <figure class="image is-4by3">
-            <img src="https://source.unsplash.com/random/1280x960" alt="Placeholder image">
-        </figure>
-    </div>
-    <div class="card-content">
-        <div class="level is-mobile">
-            <div class="level-left">
-                <div class="level-item has-text-centered">
-                    <a href="">
-                        <i class="material-icons">favorite_border</i>
-                    </a>
-                </div>
-                <div class="level-item has-text-centered">
-                    <div>
-                        <a href="">
-                            <i class="material-icons">chat_bubble_outline</i>
-                        </a>
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            {% include 'includes/_friends.html' %}
+            <div class="column is-6" style="height: 100vh;overflow: scroll;">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="content">
+                                <textarea class="textarea" placeholder="Create a Post"></textarea>
+                            </div>
+                        </div>
+                        <footer class="card-footer">
+                            <div class="control">
+                                <input class="input is-small" type="file" placeholder="Upload photo">
+                            </div>
+                            <a href="#" class="card-footer-item">Post</a>
+                        </footer>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <div class="card mt-5">
+                        <div class="header">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-48x48">
+                                        <img src="https://source.unsplash.com/random/96x96" class="is-rounded"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">John Smith</p>
+                                    <p class="subtitle is-6">17 November, 2021</p>
 
-        <div class="content">
-            <p>
-                <strong>32 Likes</strong>
-            </p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-            <a>@bulmaio</a>.
-            <a href="#">#css</a>
-            <a href="#">#responsive</a>
-            <br>
-            <time datetime="2018-1-1">11:09 PM - 1 Jan 2018</time>
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="columns is-mobile">
-            <div class="column is-11">
-                <div class="field">
-                    <div class="control">
-                        <input class="input is-medium" type="text" placeholder="Add a comment . . .">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
+                                mauris.
+                                <a>@bulmaio</a>.
+                                <a href="#">#css</a>
+                                <a href="#">#responsive</a>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://source.unsplash.com/random/1280x960" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+                                        <p class="level-item">
+                                            <span class="icon small"><i class="material-icons">thumb_up</i>20</span>
+                                        </p>
+                                    </div>
+                                    <div class="level-right">
+                                        <p class="level-item">
+                                            <span class="icon small"><i class="material-icons">comment</i>40</span>
+                                        </p>
+                                    </div>
+
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="card-footer-item">Like</a>
+                            <a href="#" class="card-footer-item">Comment</a>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-normal" type="text" placeholder="Comment here...">
+                            </div>
+                            <button type="submit" class="button mx-2 my-2 is-info is-small">Comment</button>
+                        </div>
                     </div>
+                    <div class="card mt-5">
+                        <div class="header">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-48x48">
+                                        <img src="https://source.unsplash.com/random/96x96" class="is-rounded"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">John Smith</p>
+                                    <p class="subtitle is-6">17 November, 2021</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
+                                mauris.
+                                <a>@bulmaio</a>.
+                                <a href="#">#css</a>
+                                <a href="#">#responsive</a>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://source.unsplash.com/random/1280x960" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+                                        <p class="level-item">
+                                            <span class="icon small"><i class="material-icons">thumb_up</i>20</span>
+                                        </p>
+                                    </div>
+                                    <div class="level-right">
+                                        <p class="level-item">
+                                            <span class="icon small"><i class="material-icons">comment</i>40</span>
+                                        </p>
+                                    </div>
+
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="card-footer-item">Like</a>
+                            <a href="#" class="card-footer-item">Comment</a>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-normal" type="text" placeholder="Comment here...">
+                            </div>
+                            <button type="submit" class="button mx-2 my-2 is-info is-small">Comment</button>
+                        </div>
+                    </div>
+                    <div class="card mt-5">
+                        <div class="header">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-48x48">
+                                        <img src="https://source.unsplash.com/random/96x96" class="is-rounded"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">John Smith</p>
+                                    <p class="subtitle is-6">17 November, 2021</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
+                                mauris.
+                                <a>@bulmaio</a>.
+                                <a href="#">#css</a>
+                                <a href="#">#responsive</a>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://source.unsplash.com/random/1280x960" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+                                        <p class="level-item">
+                                            <span class="icon small"><i class="material-icons">thumb_up</i>20</span>
+                                        </p>
+                                    </div>
+                                    <div class="level-right">
+                                        <p class="level-item">
+                                            <span class="icon small"><i class="material-icons">comment</i>40</span>
+                                        </p>
+                                    </div>
+
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="card-footer-item">Like</a>
+                            <a href="#" class="card-footer-item">Comment</a>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-normal" type="text" placeholder="Comment here...">
+                            </div>
+                            <button type="submit" class="button mx-2 my-2 is-info is-small">Comment</button>
+                        </div>
+                    </div>
+                    <div class="card mt-5">
+                        <div class="header">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-48x48">
+                                        <img src="https://source.unsplash.com/random/96x96" class="is-rounded"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">John Smith</p>
+                                    <p class="subtitle is-6">17 November, 2021</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
+                                mauris.
+                                <a>@bulmaio</a>.
+                                <a href="#">#css</a>
+                                <a href="#">#responsive</a>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="card-image">
+                            <figure class="image is-4by3">
+                                <img src="https://source.unsplash.com/random/1280x960" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+                                        <p class="level-item">
+                                            <span class="icon small"><i class="material-icons">thumb_up</i>20</span>
+                                        </p>
+                                    </div>
+                                    <div class="level-right">
+                                        <p class="level-item">
+                                            <span class="icon small"><i class="material-icons">comment</i>40</span>
+                                        </p>
+                                    </div>
+
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="card-footer-item">Like</a>
+                            <a href="#" class="card-footer-item">Comment</a>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-normal" type="text" placeholder="Comment here...">
+                            </div>
+                            <button type="submit" class="button mx-2 my-2 is-info is-small">Comment</button>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
-            <div class="column has-text-centered">
-                <button class="button">
-                    <i class="material-icons">more_horiz</i>
-                </button>
-            </div>
+            {% include 'includes/_groups.html' %}
         </div>
     </div>
-</div>
+</section>
 
 {% endblock %}

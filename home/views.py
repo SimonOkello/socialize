@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from profiles.models import Profile
 
 # Create your views here.
 def homeView(request):

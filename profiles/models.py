@@ -21,13 +21,19 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def get_all_friends(self):
+        return self.friends.all()
+
+    def get_number_of_friends(self):
+        return self.friends.all().count()
+
     def __str__(self):
         return str(self.user.username)
 
     def save(self, *args, **kwargs):
         ex = False
         if self.first_name and self.last_name:
-            to_slug = slugify(str(self.first_name) +" "+ str(self.last_name))
+            to_slug = slugify(str(self.first_name) + " " + str(self.last_name))
             ex = Profile.objects.filter(slug=to_slug).exists()
             while ex:
                 to_slug = slugify(to_slug+" "+str(generate_random_code()))
@@ -37,17 +43,21 @@ class Profile(models.Model):
         self.slug = to_slug
         super().save(*args, **kwargs)
 
+
 STATUS_CHOICE = (
-    ('Send','Send'),
-    ('Accepted','Accepted'),
+    ('Send', 'Send'),
+    ('Accepted', 'Accepted'),
 )
+
+
 class Relationship(models.Model):
-    sender = models.ForeignKey(to=Profile, on_delete=models.CASCADE, related_name='sender')
-    receiver = models.ForeignKey(to=Profile, on_delete=models.CASCADE, related_name='receiver')
-    status =  models.CharField(max_length=8, choices=STATUS_CHOICE)
+    sender = models.ForeignKey(
+        to=Profile, on_delete=models.CASCADE, related_name='sender')
+    receiver = models.ForeignKey(
+        to=Profile, on_delete=models.CASCADE, related_name='receiver')
+    status = models.CharField(max_length=8, choices=STATUS_CHOICE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.sender}-{self.receiver}-{self.status}"
-
