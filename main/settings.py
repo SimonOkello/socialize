@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'profiles.apps.ProfilesConfig',
     'posts.apps.PostsConfig',
-    'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
 ]
 
@@ -133,7 +132,7 @@ STATICFILES_DIR = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIAL_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

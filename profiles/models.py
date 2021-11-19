@@ -21,11 +21,37 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
     def get_all_friends(self):
         return self.friends.all()
 
     def get_number_of_friends(self):
         return self.friends.all().count()
+
+    def get_number_of_posts(self):
+        return self.posts.all().count()
+
+    def get_all_author_posts(self):
+        return self.posts.all()
+
+    def get_number_of_likes_given(self):
+        likes = self.like_set.all()
+        total_likes = 0
+        for item in likes:
+            if item.value == 'Like':
+                total_likes += 1
+
+        return total_likes
+
+    def get_number_of_likes_received(self):
+        posts = self.posts.all()
+        total_likes_received = 0
+        for item in posts:
+            total_likes_received += item.liked.all().count()
+
+        return total_likes_received
 
     def __str__(self):
         return str(self.user.username)
