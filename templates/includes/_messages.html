@@ -1,0 +1,14 @@
+{% if messages %}
+{% for message in messages %}
+<article id="messageBox" class="message {{ message.tags }}">
+    <div class="message-body">
+        {{ message }}
+    </div>
+</article>
+{% endfor %}
+
+{% endif %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+     $('#messageBox').delay(5000).fadeOut();
+</script>

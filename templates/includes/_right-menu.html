@@ -1,0 +1,15 @@
+{% load static %}
+<div class="column is-3">
+    <div class="container">
+        <aside class="menu">
+            <p class="menu-label">
+                Friends
+              </p>
+            <ul class="menu-list">
+                {% for item in obj.get_all_friends %}
+              <li><a href="#">{{item.full_name}}</a></li>
+              {% endfor %}
+            </ul>
+          </aside>
+    </div>
+</div>

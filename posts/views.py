@@ -1,14 +1,14 @@
+from django.contrib import messages
 from .forms import CreatePostModelForm, CommentModelForm
 from profiles.models import Profile
 from django.http.response import HttpResponse
-from django.shortcuts import redirect, render, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
 
 # Create your views here.
 from.models import Post, Comment, Like
 
 
 def post_create_comment_and_list_view(request):
-
     user = request.user
     obj = Profile.objects.get(user=user)
     posts = Post.objects.select_related('author').all()
@@ -61,3 +61,48 @@ def like_unlike_view(request):
         post.save()
         like.save()
     return redirect('posts:post-list-view')
+
+
+def edit_post_view(request, pk):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    obj = get_object_or_404(Post, pk=pk)
+    if obj.author == profile:
+        post_form = CreatePostModelForm(instance=obj)
+        context = {'obj': obj, 'post_form': post_form}
+        if request.method == 'POST':
+            post_form = CreatePostModelForm(
+                request.POST, request.FILES, instance=obj)
+            if post_form.is_valid():
+                image = post_form.cleaned_data.get('image')
+                instance = post_form.save(commit=False)
+                instance.author = profile
+                instance.image = image
+                instance.save()
+                messages.success(
+                    request, 'Post has been updated!')
+                return redirect('posts:post-list-view')
+    else:
+        messages.warning(request, 'You are not the author of this post')
+        return redirect('posts:post-list-view')
+
+    return render(request, 'posts/edit-post.html', context)
+
+
+def delete_post_view(request, pk):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    obj = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        if obj.author == profile:
+            obj.delete()
+            messages.success(
+                request, 'Post has been deleted!')
+            return redirect('posts:post-list-view')
+        else:
+            messages.error(
+                request, 'You need to be the author of the post to delete')
+            return redirect('posts:post-list-view')
+    else:
+        messages.error(request, 'Something went wrong!')
+        return redirect('posts:post-list-view')

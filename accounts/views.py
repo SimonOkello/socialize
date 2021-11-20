@@ -5,4 +5,4 @@ from django.contrib.auth import logout, login, authenticate
 
 def userLogOut(request):
     logout(request)
-    return redirect('home:home-view')
+    return redirect('posts:post-list-view')

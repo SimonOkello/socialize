@@ -76,6 +76,12 @@ STATUS_CHOICE = (
 )
 
 
+class RelationshipManager(models.Manager):
+    def friend_requests(self, receiver):
+        qs = Relationship.objects.filter(receiver=receiver, status='Send')
+        return qs
+
+
 class Relationship(models.Model):
     sender = models.ForeignKey(
         to=Profile, on_delete=models.CASCADE, related_name='sender')
@@ -84,6 +90,8 @@ class Relationship(models.Model):
     status = models.CharField(max_length=8, choices=STATUS_CHOICE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = RelationshipManager()
 
     def __str__(self):
         return f"{self.sender}-{self.receiver}-{self.status}"
