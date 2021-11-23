@@ -3,11 +3,11 @@
     <div class="container">
         <aside class="menu">
             <p class="menu-label">
-                Friends
+               Accepted Friends
               </p>
             <ul class="menu-list">
-                {% for item in obj.get_all_friends %}
-              <li><a href="#">{{item.full_name}}</a></li>
+                {% for friend in my_friends %}
+              <li><a href="#">{{friend.full_name}}</a></li>
               {% endfor %}
             </ul>
           </aside>

@@ -1,6 +1,6 @@
 from django.contrib import messages
 from .forms import CreatePostModelForm, CommentModelForm
-from profiles.models import Profile
+from profiles.models import Profile, Relationship
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
 
@@ -11,6 +11,8 @@ from.models import Post, Comment, Like
 def post_create_comment_and_list_view(request):
     user = request.user
     obj = Profile.objects.get(user=user)
+    my_friends = Relationship.objects.accepted_friends(obj)
+    print("FRIENDS:", my_friends)
     posts = Post.objects.select_related('author').all()
     post_form = CreatePostModelForm()
     comment_form = CommentModelForm()
@@ -36,7 +38,8 @@ def post_create_comment_and_list_view(request):
             comment_form = CommentModelForm()
 
     context = {'user': user, 'posts': posts, 'obj': obj,
-               'post_form': post_form, 'comment_form': comment_form}
+               'my_friends': my_friends, 'post_form': post_form,
+               'comment_form': comment_form}
     return render(request, 'posts/index.html', context)
 
 

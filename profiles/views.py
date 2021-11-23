@@ -25,3 +25,25 @@ def friend_requests_view(request):
     print('FRIENDS:', qs)
     context = {'qs': qs}
     return render(request, 'profiles/friend-requests.html', context)
+
+
+# def accepted_friends_view(request):
+#     user = request.user
+#     profile = Profile.objects.get(user=user)
+#     my_friends = Relationship.objects.accepted_friends(profile)
+#     context = {'my_friends': my_friends}
+#     return render(request, 'profiles/friend-requests.html', context)
+
+
+def profile_list_view(request):
+    user = request.user
+    qs = Profile.objects.get_all_profiles(user)
+    context = {'qs': qs}
+    return render(request, 'profiles/all-friends.html', context)
+
+
+def suggested_friends_view(request):
+    user = request.user
+    qs = Profile.objects.get_all_available_profiles_to_request(user)
+    context = {'qs': qs}
+    return render(request, 'profiles/suggested-friends.html', context)

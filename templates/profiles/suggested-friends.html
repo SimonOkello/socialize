@@ -1,10 +1,10 @@
 {% extends 'includes/base.html' %}
 {% load static %}
-{% block title %}Friend requests{% endblock title %}
+{% block title %}Suggested friends{% endblock title %}
 {% block content %}
 <section class="section">
     <div class="container">
-        <p class="title is-5">Friend Requests</p>
+        <p class="title is-5">Your Suggested Friends</p>
         <div class="columns is-multiline has-background-grey-lighter">
             {% for obj in qs %}
             <div class="column is-2">
@@ -22,8 +22,8 @@
                           </div>
                     </div>
                     <footer class="card-footer">
-                      <a href="#" class="card-footer-item">Accept</a>
-                      <a href="#" class="card-footer-item">Delete</a>
+                      <a href="#" class="card-footer-item">Add Friend</a>
+                      <!-- <a href="#" class="card-footer-item">Delete</a> -->
                     </footer>
                   </div>
             </div>

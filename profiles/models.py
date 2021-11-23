@@ -1,10 +1,36 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import query
+from django.db.models import Q
 from django.dispatch.dispatcher import receiver
 from django.template.defaultfilters import slugify
 # Create your models here.
 
 from .utils import generate_random_code
+
+
+class ProfileManager(models.Manager):
+    def get_all_available_profiles_to_request(self, sender):
+        profiles = Profile.objects.select_related(
+            'user').all().exclude(user=sender)
+        my_profile = Profile.objects.select_related('user').get(user=sender)
+        query_set = Relationship.objects.filter(
+            Q(sender=my_profile) | Q(receiver=my_profile))
+        accepted = set([])
+        for rel in query_set:
+            if rel.status == 'Accepted':
+                accepted.add(rel.receiver)
+                accepted.add(rel.sender)
+            print("ACCEPTED:", accepted)
+        available = [
+            profile for profile in profiles if profile not in accepted]
+        print("AVAILABLE:", available)
+        return available
+
+    def get_all_profiles(self, logged_in_user):
+        profiles = Profile.objects.select_related(
+            'user').all().exclude(user=logged_in_user)
+        return profiles
 
 
 class Profile(models.Model):
@@ -20,6 +46,8 @@ class Profile(models.Model):
     slug = models.SlugField(unique=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = ProfileManager()
 
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
@@ -79,6 +107,10 @@ STATUS_CHOICE = (
 class RelationshipManager(models.Manager):
     def friend_requests(self, receiver):
         qs = Relationship.objects.filter(receiver=receiver, status='Send')
+        return qs
+
+    def accepted_friends(self, receiver):
+        qs = Relationship.objects.filter(receiver=receiver, status='Accepted')
         return qs
 
 
