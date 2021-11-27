@@ -1,0 +1,17 @@
+{% extends 'includes/base.html' %}
+{% load static %}
+{% block title %}All friends{% endblock title %}
+{% block content %}
+
+<h1>Friends</h1>
+<hr>
+{% for obj in qs %}
+<img src="{{obj.avatar.url}}" alt="User avatar"><br>
+<h5>{{obj.full_name}}</h5>
+<h3>
+    {{requests_receivers}}
+</h3>
+{% endfor %}
+
+
+{% endblock content %}

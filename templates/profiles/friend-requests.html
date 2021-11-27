@@ -3,34 +3,51 @@
 {% block title %}Friend requests{% endblock title %}
 {% block content %}
 <section class="section">
-    <div class="container">
-        <p class="title is-5">Friend Requests</p>
-        <div class="columns is-multiline has-background-grey-lighter">
-            {% for obj in qs %}
-            <div class="column is-2">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                          <img src="{{obj.sender.avatar.url}}" alt="User avatar">
-                        </figure>
-                      </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-content">
-                              <p class="title is-6">{{obj.sender.full_name}}</p>
-                            </div>
-                          </div>
-                    </div>
-                    <footer class="card-footer">
-                      <a href="#" class="card-footer-item">Accept</a>
-                      <a href="#" class="card-footer-item">Delete</a>
-                    </footer>
-                  </div>
+  <div class="container">
+    {% include 'includes/_messages.html' %}
+    <p class="title is-5">Friend Requests</p>
+    <div class="columns is-multiline has-background-grey-lighter">
+      {% for obj in qs %}
+      <div class="column is-2">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{obj.sender.avatar.url}}" alt="User avatar">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-6">
+                  <a href="{% url 'profiles:user-profile' obj.sender.pk %}">{{obj.sender.full_name}}</a>
+                </p>
+              </div>
             </div>
-            {% endfor %}
-
+          </div>
+          <footer class="card-footer">
+            <div class="card-footer-item">
+              <form action="{% url 'profiles:accept-request' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="profile_pk" value="{{obj.sender.pk}}">
+                <button type="submit" name="acceptBtn" class="button is-primary">Accept</button>
+              </form>
+            </div>
+            <div class="card-footer-item">
+              <form action="{% url 'profiles:reject-request' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="profile_pk" value="{{obj.sender.pk}}">
+                <button type="submit" name="rejectBtn" class="button is-danger">Reject</button>
+              </form>
+            </div>
+          </footer>
         </div>
+      </div>
+      {% empty %}
+      <h6 class="title is-6">No Friend Requests Received Yet...</h6>
+      {% endfor %}
+
     </div>
+  </div>
 
 </section>
 {% endblock content %}

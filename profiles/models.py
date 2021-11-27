@@ -21,10 +21,8 @@ class ProfileManager(models.Manager):
             if rel.status == 'Accepted':
                 accepted.add(rel.receiver)
                 accepted.add(rel.sender)
-            print("ACCEPTED:", accepted)
         available = [
             profile for profile in profiles if profile not in accepted]
-        print("AVAILABLE:", available)
         return available
 
     def get_all_profiles(self, logged_in_user):

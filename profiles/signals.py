@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile, Relationship
@@ -19,3 +19,13 @@ def post_save_add_to_friends(sender, instance, created, **kwargs):
         receiver_.friends.add(sender_.user)
         sender_.save()
         receiver_.save()
+
+
+@receiver(pre_delete, sender=Relationship)
+def post_delete_remove_from_friends(sender, instance, **kwargs):
+    sender = instance.sender
+    receiver = instance.receiver
+    sender.friends.remove(instance.receiver.user)
+    receiver.friends.remove(instance.sender.user)
+    sender.save()
+    receiver.save()

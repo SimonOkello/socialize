@@ -3,34 +3,57 @@
 {% block title %}All friends{% endblock title %}
 {% block content %}
 <section class="section">
-    <div class="container">
-        <p class="title is-5">All Friends</p>
-        <div class="columns is-multiline has-background-grey-lighter">
-            {% for obj in qs %}
-            <div class="column is-2">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                          <img src="{{obj.sender.avatar.url}}" alt="User avatar">
-                        </figure>
-                      </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-content">
-                              <p class="title is-6">{{obj.sender.full_name}}</p>
-                            </div>
-                          </div>
-                    </div>
-                    <footer class="card-footer">
-                      <a href="#" class="card-footer-item">Accept</a>
-                      <a href="#" class="card-footer-item">Delete</a>
-                    </footer>
-                  </div>
+  <div class="container">
+    <p class="title is-5">All Friends</p>
+    <div class="columns is-multiline has-background-grey-lighter">
+      {% for obj in qs %}
+      <div class="column is-2">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{obj.avatar.url}}" alt="User avatar">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-6">
+                  <a href="{% url 'profiles:user-profile' obj.pk %}">{{obj.full_name}}</a>
+                </p>
+              </div>
             </div>
-            {% endfor %}
-
+          </div>
+          <footer class="card-footer">
+            {% if obj.user not in requests_receivers and obj.user not in requests_senders %}
+            <div class="card-footer-item">
+              <form action="{% url 'profiles:send-request' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                <button type="submit" class="button is-primary">Send request</button>
+              </form>
+            </div>
+            {% endif %}
+            {% if obj.user in requests_receivers and request.user not in obj.friends.all %}
+            <div class="card-footer-item">
+              <button type="submit" class="button is-info" disabled>Request send</button>
+            </div>
+            {% endif %}
+            {% if request.user in obj.friends.all %}
+            <div class="card-footer-item">
+              <form action="{% url 'profiles:remove-friend' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                <button type="submit" class="button is-danger">Unfriend</button>
+              </form>
+            </div>
+            {% endif %}
+          </footer>
         </div>
+      </div>
+      {% endfor %}
+
     </div>
+  </div>
 
 </section>
 {% endblock content %}

@@ -51,7 +51,10 @@
                                     </figure>
                                 </div>
                                 <div class="media-content mt-2">
-                                    <p class="title is-6">{{post.author.full_name}}</p>
+                                    <p class="title is-6">
+                                        <a href="{% url 'profiles:user-profile' post.author.pk %}">
+                                            {{post.author.full_name}}</a>
+                                    </p>
                                     <p class="subtitle is-6"><small>{{post.created}}</small></p>
 
                                 </div>
@@ -95,7 +98,7 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="card-footer mx-2">
+                        <footer class="card-footer mx-2">
                             <div class="card-footer-item">
                                 <form action="{% url 'posts:like-post-view' %}" method="POST">
                                     {% csrf_token %}
@@ -113,7 +116,7 @@
                             <div class="card-footer-item">
                                 <button class="button is-white comment-btn is-fullwidth">Comment</button>
                             </div>
-                        </div>
+                        </footer>
                         <br>
                         <!-- DELETE POST MODAL -->
                         <div class="modal" id="deletePost">

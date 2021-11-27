@@ -4,7 +4,7 @@
 {% block content %}
 <section class="section">
   <div class="container">
-    
+
     <div class="card">
       <div class="card-content">
         <div class="content">
@@ -19,7 +19,7 @@
                 <div class="media-content">
                   <div class="content">
                     <p>
-                    <h4 class="title is-4">{{obj.first_name}} {{obj.last_name}}</h4>
+                    <h4 class="title is-4">{{obj.full_name}}</h4>
                     <p class="subtitle is-6">{{obj.email}}</p>
 
                     {{obj.bio}}
@@ -28,8 +28,35 @@
                   <nav class="level is-mobile">
                     <div class="level-left">
                       <a class="level-item">
+                        {% ifequal obj.pk request.user.pk %}
                         <button class="button is-primary" id="showModal">Edit Profile</button>
+                        {% endifequal%}
                       </a>
+                      <!-- ADD User -->
+                      {% if obj not in requests_receivers and obj not in requests_senders %}
+                      <div class="level-item">
+                        <form action="{% url 'profiles:send-request' %}" method="post">
+                          {% csrf_token %}
+                          <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                          <button type="submit" class="button is-primary">Send request</button>
+                        </form>
+                      </div>
+                      {% endif %}
+                      {% if obj in requests_receivers and request.user not in obj.friends.all %}
+                      <div class="level-item">
+                        <button type="submit" class="button is-info" disabled>Request send</button>
+                      </div>
+                      {% endif %}
+                      {% if request.user in obj.friends.all %}
+                      <div class="level-item">
+                        <form action="{% url 'profiles:remove-friend' %}" method="post">
+                          {% csrf_token %}
+                          <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                          <button type="submit" class="button is-danger">Unfriend</button>
+                        </form>
+                      </div>
+                      {% endif %}
+                      <!-- END -->
                     </div>
                   </nav>
                 </div>
@@ -62,6 +89,33 @@
         </div>
       </div>
     </div>
+    <section class="section">
+      <div class="container">
+        <article class="panel is-primary">
+          <p class="panel-heading">
+            Posts
+          </p>
+          <div class="panel-block">
+            <p class="control has-icons-left">
+              <input class="input is-primary" type="text" placeholder="Search">
+              <span class="icon is-left">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </span>
+            </p>
+          </div>
+          {% for item in obj.get_all_author_posts %}
+          <a href="{% url 'posts:post-list-view' %}" class="panel-block is-active">
+            <span class="panel-icon">
+              <i class="fas fa-book" aria-hidden="true"></i>
+            </span>
+            {{item.content}}
+          </a>
+          {% empty %}
+          <p class="subtitlt">User has not posted yet!</p>
+          {% endfor %}
+        </article>
+      </div>
+    </section>
     <!-- Edit Profile Modal -->
     <div class="modal" id="editProfile">
       <div class="modal-background"></div>
