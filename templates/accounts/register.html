@@ -1,6 +1,6 @@
 {% extends 'includes/login_base.html' %}
 {% load static %}
-{% block title %}Login{% endblock title %}
+{% block title %}Register{% endblock title %}
 {% block content %}
 {% include 'includes/_messages.html' %}
 <form action="" method="POST">
@@ -42,4 +42,8 @@
   </form>
   <p>Already have an account?</p>
   <a href="{% url 'accounts:login' %}">Login</a>
+  <br>
+
+  TODO:---Working on Registration----
   {% endblock content %}
+
