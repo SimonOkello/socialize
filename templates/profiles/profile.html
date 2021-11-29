@@ -33,7 +33,7 @@
                         {% endifequal%}
                       </a>
                       <!-- ADD User -->
-                      {% if obj not in requests_receivers and obj not in requests_senders %}
+                      {% if obj.user not in requests_receivers and obj.user not in requests_senders %}
                       <div class="level-item">
                         <form action="{% url 'profiles:send-request' %}" method="post">
                           {% csrf_token %}
@@ -42,7 +42,7 @@
                         </form>
                       </div>
                       {% endif %}
-                      {% if obj in requests_receivers and request.user not in obj.friends.all %}
+                      {% if obj.user in requests_receivers and request.user not in obj.user.friends.all %}
                       <div class="level-item">
                         <button type="submit" class="button is-info" disabled>Request send</button>
                       </div>
@@ -53,6 +53,22 @@
                           {% csrf_token %}
                           <input type="hidden" name="profile_pk" value="{{obj.pk}}">
                           <button type="submit" class="button is-danger">Unfriend</button>
+                        </form>
+                      </div>
+                      {% endif %}
+                      {% if obj.user in requests_senders and request.user not in obj.user.friends.all %}
+                      <div class="level-item">
+                        <form action="{% url 'profiles:accept-request' %}" method="post">
+                          {% csrf_token %}
+                          <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                          <button type="submit" name="acceptBtn" class="button is-primary">Accept</button>
+                        </form>
+                      </div>
+                      <div class="level-item">
+                        <form action="{% url 'profiles:reject-request' %}" method="post">
+                          {% csrf_token %}
+                          <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                          <button type="submit" name="rejectBtn" class="button is-danger">Reject</button>
                         </form>
                       </div>
                       {% endif %}

@@ -29,9 +29,9 @@
                     {{request.user}}</strong></a></p>
         {% endif %}
         {% if request.user.is_authenticated %}
-        <p class="level-item"><a href="{% url 'accounts:log-out' %}" class="button is-success">Logout</a></p>
+        <p class="level-item"><a href="{% url 'accounts:logout' %}" class="button is-success">Logout</a></p>
         {% else %}
-        <p class="level-item"><a href="#" class="button is-success">Login</a></p>
+        <p class="level-item"><a href="{% url 'accounts:login' %}" class="button is-success">Login</a></p>
         {% endif %}
     </div>
 </nav>

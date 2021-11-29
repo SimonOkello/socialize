@@ -10,8 +10,10 @@ from django.db.models import Q
 
 def profileView(request, pk):
     obj = Profile.objects.get(pk=pk)
-    _friend_req_receivers = Relationship.objects.filter(sender=obj)
-    _friend_req_senders = Relationship.objects.filter(receiver=obj)
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    _friend_req_receivers = Relationship.objects.filter(sender=profile)
+    _friend_req_senders = Relationship.objects.filter(receiver=profile)
     requests_receivers = []
     requests_senders = []
     for item in _friend_req_receivers:
@@ -19,6 +21,7 @@ def profileView(request, pk):
     for item in _friend_req_senders:
         requests_senders.append(item.sender.user)
     print('OBJ:', obj)
+    print('REQUSER:', profile)
     print('RECEIV:', requests_receivers)
     print('SENDERS:', requests_senders)
     form = ProfileModelForm(instance=obj)

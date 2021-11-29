@@ -47,6 +47,22 @@
               </form>
             </div>
             {% endif %}
+            {% if obj.user in requests_senders and request.user not in obj.user.friends.all %}
+            <div class="card-footer-item">
+              <form action="{% url 'profiles:accept-request' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                <button type="submit" name="acceptBtn" class="button is-primary">Accept</button>
+              </form>
+            </div>
+            <div class="card-footer-item">
+              <form action="{% url 'profiles:reject-request' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                <button type="submit" name="rejectBtn" class="button is-danger">Reject</button>
+              </form>
+            </div>
+            {% endif %}
           </footer>
         </div>
       </div>

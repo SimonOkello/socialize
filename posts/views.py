@@ -1,13 +1,15 @@
 from django.contrib import messages
+from django.contrib.auth import login
 from .forms import CreatePostModelForm, CommentModelForm
 from profiles.models import Profile, Relationship
 from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from.models import Post, Comment, Like
 
-
+@login_required(login_url='accounts:login')
 def post_create_comment_and_list_view(request):
     user = request.user
     obj = Profile.objects.get(user=user)
@@ -65,7 +67,7 @@ def like_unlike_view(request):
         like.save()
     return redirect('posts:post-list-view')
 
-
+@login_required(login_url='accounts:login')
 def edit_post_view(request, pk):
     user = request.user
     profile = Profile.objects.get(user=user)
@@ -91,7 +93,7 @@ def edit_post_view(request, pk):
 
     return render(request, 'posts/edit-post.html', context)
 
-
+@login_required(login_url='accounts:login')
 def delete_post_view(request, pk):
     user = request.user
     profile = Profile.objects.get(user=user)
